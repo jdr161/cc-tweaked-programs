@@ -21,10 +21,12 @@ function IsLowDurability(durability)
     return durability <= 0.05
 end
 
-function MoveItem(fromInventory, fromSlot, toInventory)
+function TryMoveItem(fromInventory, fromSlot, toInventory)
     if fromInventory == nil or fromSlot == nil or toInventory == nil then
+        return false
     else
         fromInventory.pushItems(peripheral.getName(toInventory), fromSlot)
+        return true
     end
 end
 
@@ -41,9 +43,11 @@ function Main()
     while true do
         local mineshaftInventory = GetMineshaftInventory()
         if IsLowDurability(GetDurability(mineshaftInventory, 1)) then
-            MoveItem(mineshaftInventory, 1, GetNonShaftAdjacentInventory())
-            print("Moved item with low durability")
+            if TryMoveItem(mineshaftInventory, 1, GetNonShaftAdjacentInventory()) then
+                print("Moved item with low durability")
+            end
         end
+        sleep(20)
     end
 end
 
