@@ -18,7 +18,7 @@ function IsLowDurability(durability)
     if durability == nil then
         return false
     end
-    return 0 < durability <= 0.05
+    return 0 < durability and durability <= 0.05
 end
 
 function TryMoveItem(fromInventory, fromSlot, toInventory)
